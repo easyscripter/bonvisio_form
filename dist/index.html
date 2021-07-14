@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="css/style.min.css" />
+    <title>Bonvisio Form</title>
+  </head>
+  <body>
+    <form action="" class="auth-form">
+      <div class="form-group-container">
+        <div class="input-container">
+          <input
+            type="text"
+            class="input-container__input"
+            placeholder="E-mail"
+          />
+          <div class="input-container__icon-container">
+            <div class="input-icon input-icon__email"></div>
+          </div>
+          <div class="input-container__validate-error"></div>
+        </div>
+        <div class="form-group">
+          <div class="input-container">
+            <input
+              type="text"
+              class="input-container__input"
+              placeholder="Имя"
+            />
+            <div class="input-container__icon-container">
+              <div class="input-icon input-icon__user"></div>
+            </div>
+            <div class="input-container__validate-error"></div>
+          </div>
+          <div class="input-container">
+            <input
+              type="text"
+              class="input-container__input"
+              placeholder="Фамилия"
+            />
+            <div class="input-container__icon-container">
+              <div class="input-icon input-icon__user"></div>
+            </div>
+            <div class="input-container__validate-error"></div>
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="input-container">
+            <input
+              type="password"
+              class="input-container__input"
+              placeholder="Пароль"
+            />
+            <div class="input-container__icon-container">
+              <div class="input-icon input-icon__pass"></div>
+            </div>
+            <div class="input-container__validate-error"></div>
+          </div>
+          <div class="input-container">
+            <input
+              type="password"
+              class="input-container__input"
+              placeholder="Повторите пароль"
+            />
+            <div class="input-container__icon-container">
+              <div class="input-icon input-icon__pass"></div>
+            </div>
+            <div class="input-container__validate-error"></div>
+          </div>
+        </div>
+        <button class="button">Отправить</button>
+      </div>
+    </form>
+    <div id="myModal" class="modal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <span class="close"></span>
+        </div>
+        <div class="modal-body">
+          <p>Данные успешно отправлены</p>
+        </div>
+      </div>
+    </div>
+
+    <script src="js/script.js"></script>
+  </body>
+</html>
