@@ -1,60 +1,105 @@
 const gulp = require("gulp");
+const watch = require("gulp-watch");
+const prefiexer = require("gulp-autoprefixer");
+const uglify = require("gulp-uglify");
+const sass = require('gulp-sass')(require('sass'));
+const sourceMaps = require("gulp-sourcemaps");
+const cssMin = require("gulp-minify-css");
+const rimRaf = require("rimraf");
 const browserSync = require("browser-sync");
-const sass = require("gulp-sass")(require("sass"));
-const rename = require("gulp-rename");
-const autoprefixer = require("gulp-autoprefixer");
-const cleanCSS = require("gulp-clean-css");
+const rigger = require("gulp-rigger");
+const reload = browserSync.reload;
 
-gulp.task("server", () => {
-    browserSync.init({
+
+
+const path = {
+    build: {
+        html: './dist',
+        js: './dist/js/',
+        css: './dist/css/',
+        icons: './dist/icons/'
+    },
+    src: {
+        html: './src/*.html',
+        js: './src/js/*.js',
+        style: './src/sass/style.scss',
+        icons: './src/icons/**/*.png'
+    },
+    watch: {
+        html: './src/**/*.html',
+        js: './src/js/*.js',
+        style: './src/sass/**/*.scss',
+        icons: './src/icons/**/*.png'
+    },
+    clean: './dist'
+};
+
+
+gulp.task("webserver", function () {
+    browserSync({
         server: {
-            baseDir: "dist",
+            baseDir: "./dist"
         },
+        host: 'localhost',
+        port: 3000,
     });
 });
 
-// Static server
-// gulp.task('server', function() {
-//     browserSync.init({
-//         server: {
-//             baseDir: "src"
-//         }
-//     });
-// });
 
-gulp.task("styles", function () {
-    return gulp
-        .src("src/sass/**/*.+(scss|sass)")
-        .pipe(sass({ outputStyle: "compressed" }).on("error", sass.logError))
-        .pipe(
-            rename({
-                prefix: "",
-                suffix: ".min",
-            })
-        )
-        .pipe(autoprefixer())
-        .pipe(cleanCSS({ compatibility: "ie8" }))
-        .pipe(gulp.dest("dist/css"))
-        .pipe(browserSync.stream());
+gulp.task("html:build", function () {
+    return gulp.src(path.src.html)
+        .pipe(rigger())
+        .pipe(gulp.dest(path.build.html))
+        .pipe(reload({
+            stream: true
+        }));
 });
 
-gulp.task("scripts", function () {
-    return gulp.src("src/js/**/*.+(js)").pipe(gulp.dest("dist/js"));
+gulp.task("js:build", function () {
+    return gulp.src(path.src.js)
+        .pipe(rigger())
+        .pipe(sourceMaps.init())
+        .pipe(uglify())
+        .pipe(sourceMaps.write())
+        .pipe(gulp.dest(path.build.js))
+        .pipe(reload({ stream: true }));
 });
 
-gulp.task("html", function () {
-    return gulp.src("src/*.html").pipe(gulp.dest("dist/"));
+gulp.task("style:build", function () {
+    return gulp.src(path.src.style)
+        .pipe(sourceMaps.init())
+        .pipe(sass())
+        .pipe(prefiexer())
+        .pipe(cssMin())
+        .pipe(sourceMaps.write())
+        .pipe(gulp.dest(path.build.css))
+        .pipe(reload({
+            stream: true
+        }));
 });
 
-gulp.task("icons", function () {
-    return gulp.src("src/icons/**/*.+(png|svg)").pipe(gulp.dest("dist/icons"));
+gulp.task('icons:build', function () {
+    return gulp.src(path.src.icons)
+        .pipe(gulp.dest(path.build.icons)); // выгрузка готовых файлов
 });
 
 gulp.task("watch", function () {
-    gulp.watch("src/sass/**/*.+(scss|sass)", gulp.parallel("styles"));
-    gulp.watch("dist/*.html").on("change", browserSync.reload);
-    gulp.watch("dist/js/script.js").on("change", browserSync.reload);
+    gulp.watch(path.watch.html, gulp.parallel("html:build"));
+    gulp.watch(path.watch.style, gulp.parallel("style:build"));
+    gulp.watch(path.watch.js, gulp.parallel("js:build"));
+    gulp.watch(path.watch.icons, gulp.parallel("icons:build"));
 });
 
-gulp.task("build", gulp.parallel("styles", "scripts", "html", "icons"));
-gulp.task("dev", gulp.parallel("scripts", "styles", "html", "icons", "watch", "server"));
+gulp.task("rimraf", function (callback) {
+    rimRaf(path.clean, callback);
+});
+
+gulp.task("build", gulp.parallel(
+    'html:build',
+    'js:build',
+    'style:build',
+    'icons:build',
+));
+
+
+gulp.task('default', gulp.parallel('build', 'webserver', 'watch', 'icons:build'));
