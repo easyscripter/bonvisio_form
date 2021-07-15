@@ -4,7 +4,7 @@ window.addEventListener('DOMContentLoaded', function () {
     const confirmPassField = document.querySelectorAll(".input-container__input")[4];
     const form = document.querySelector(".auth-form");
     const errorFields = document.querySelectorAll(".input-container__validate-error");
-    const closeModal = document.getElementsByClassName("close")[0];
+    const closeModal = document.querySelector(".close");
     const errorsDict = ["Вы не заполнили поле Email", "Вы не указали Имя", "Вы не указали Фамилию", "Вы не указали пароль", "Вы не ввели пароль "]
     let formIsValid = false;
 
@@ -37,6 +37,7 @@ window.addEventListener('DOMContentLoaded', function () {
 
     closeModal.addEventListener('click', function () {
         document.body.classList.remove('fixed');
+        document.getElementById('myModal').style.display = "none";
     });
 });
 
