@@ -23,13 +23,13 @@ const path = {
         html: './src/*.html',
         js: './src/js/*.js',
         style: './src/sass/style.scss',
-        icons: './src/icons/**/*.png'
+        icons: './src/icons/**/*.svg'
     },
     watch: {
         html: './src/**/*.html',
         js: './src/js/*.js',
         style: './src/sass/**/*.scss',
-        icons: './src/icons/**/*.png'
+        icons: './src/icons/**/*.svg'
     },
     clean: './dist'
 };
