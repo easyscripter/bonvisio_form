@@ -35,6 +35,12 @@ body {
         font-size: 18px;
         text-indent: 35px;
 
+        &:hover {
+            -webkit-box-shadow: 4px 5px 15px -2px rgba(227, 134, 8, 0.98);
+            -moz-box-shadow: 4px 5px 15px -2px rgba(227, 134, 8, 0.98);
+            box-shadow: 4px 5px 15px -2px rgba(227, 134, 8, 0.98);
+            transition: 0.4s ease-in-out;
+        }
 
         &::placeholder {
             color: #C9C9C9;
@@ -69,17 +75,17 @@ body {
     height: 20px;
 
     &__email {
-        background: url("../icons/mail-icon.png") no-repeat;
+        background: url("../icons/mail-icon.svg") no-repeat;
         background-size: contain;
     }
 
     &__user {
-        background: url("../icons/user-icon.png") no-repeat;
+        background: url("../icons/user-icon.svg") no-repeat;
         background-size: contain;
     }
 
     &__pass {
-        background: url("../icons/pass-icon.png") no-repeat;
+        background: url("../icons/pass-icon.svg") no-repeat;
         background-size: contain;
     }
 }
@@ -123,6 +129,12 @@ body {
 
     &:focus {
         color: rgba(79, 81, 82, 0.4)
+    }
+
+    &:hover {
+        -webkit-box-shadow: 4px 4px 15px -6px rgba(227, 134, 8, 0.6);
+        -moz-box-shadow: 4px 4px 15px -6px rgba(227, 134, 8, 0.6);
+        box-shadow: 4px 4px 15px -6px rgba(227, 134, 8, 0.6);
     }
 }
 
@@ -181,7 +193,7 @@ body {
 }
 
 
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 767px) {
     .form-group {
         display: flex;
         flex-direction: column;
